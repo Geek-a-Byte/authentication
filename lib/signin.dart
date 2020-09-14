@@ -6,6 +6,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_awesome_alert_box/flutter_awesome_alert_box.dart';
+import 'dart:async';
 
 class SignIn extends StatefulWidget {
   SignIn({Key key}) : super(key: key);
@@ -15,16 +16,10 @@ class SignIn extends StatefulWidget {
 }
 
 class _SignInState extends State<SignIn> {
-  //taking the input from the user
-  //TextEditingController nameController = TextEditingController();
-  //TextEditingController phonecontroller = TextEditingController();
-  //TextEditingController codecontroller = TextEditingController();
-
   final _nameController = TextEditingController();
   final _phoneController = TextEditingController();
   final _codeController = TextEditingController();
-
-  bool _showPass = false;
+  String verificationId;
 
   @override
   Future<void> loginUser(
@@ -33,7 +28,7 @@ class _SignInState extends State<SignIn> {
     print(phone);
     _auth.verifyPhoneNumber(
       phoneNumber: phone,
-      timeout: Duration(seconds: 60),
+      timeout: Duration(seconds: 120),
       verificationCompleted: (AuthCredential credential) async {
         Navigator.of(context).pop();
 
@@ -60,7 +55,8 @@ class _SignInState extends State<SignIn> {
       verificationFailed: (AuthException e) {
         print(e.message);
       },
-      codeSent: (String verificationId, [int forceResendingToken]) {
+      codeSent: (String verId, [int forceResendingToken]) {
+        verificationId = verId;
         print('Verification id is:');
         print(verificationId);
 
@@ -75,19 +71,6 @@ class _SignInState extends State<SignIn> {
                     children: <Widget>[
                       TextFormField(
                         controller: _codeController,
-                        obscureText: (_showPass == true) ? false : true,
-                        decoration: InputDecoration(
-                          suffixIcon: IconButton(
-                            onPressed: () {
-                              setState(() {
-                                _showPass = !_showPass;
-                              });
-                            },
-                            icon: !_showPass
-                                ? Icon(Icons.visibility_off)
-                                : Icon(Icons.visibility),
-                          ),
-                        ),
                       )
                     ],
                   ),
@@ -127,10 +110,11 @@ class _SignInState extends State<SignIn> {
                               //icon: Icons.done,
                               title: "Login Successful!",
                               messageText: "The contact no was verified.");
-                        } catch (e) {
+                        } catch (Exp) {
+                          print(Exp);
                           WarningAlertBox(
                               context: context,
-                              title: "Sorry!Try Again.",
+                              title: "Sorry ! Try Again.",
                               messageText: "Invalid NID or contact no or OTP");
                         }
                       },
@@ -138,7 +122,9 @@ class _SignInState extends State<SignIn> {
                   ]);
             });
       },
-      codeAutoRetrievalTimeout: null,
+      codeAutoRetrievalTimeout: (String verId) {
+        verificationId = verId;
+      },
     );
   }
   // String title = "Sign in";
