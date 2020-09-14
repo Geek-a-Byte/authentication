@@ -1,26 +1,33 @@
-import 'package:chatar_matha/LoginScreen.dart';
+//import 'package:firebase_auth/firebase_auth.dart';
+//import 'package:cloud_firestore/cloud_firestore.dart';
+//import 'package:firebase_core_web/firebase_core_web.dart';
+import 'package:chatar_matha/PageOne.dart';
+import 'package:chatar_matha/screens/product_details_screen.dart';
+import 'package:chatar_matha/splashscreen.dart';
+import 'package:chatar_matha/widgets/product_item.dart';
+import 'package:chatar_matha/widgets/products_grid.dart';
 import 'package:flutter/material.dart';
+import 'package:chatar_matha/SignUp.dart';
+import 'package:chatar_matha/signin.dart';
+import 'PageTwo.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          // This is the theme of your application.
-          //
-          // Try running your application with "flutter run". You'll see the
-          // application has a blue toolbar. Then, without quitting the app, try
-          // changing the primarySwatch below to Colors.green and then invoke
-          // "hot reload" (press "r" in the console where you ran "flutter run",
-          // or simply save your changes to "hot reload" in a Flutter IDE).
-          // Notice that the counter didn't reset back to zero; the application
-          // is not restarted.
-          primarySwatch: Colors.blue,
-        ),
-        home: LoginScreen());
+        debugShowCheckedModeBanner: false,
+        initialRoute: '/',
+        routes: {
+          '/': (context) => SplashScreen(),
+          // When navigating to the "/second" route, build the SecondScreen widget.
+          '/PageOne': (context) => PageOne(),
+          '/PageTwo': (context) => PageTwo(),
+          '/SignUp': (context) => SignUp(),
+          //'/dashboard': (context) => DashBoard(),
+          '/signin': (context) => SignIn(),
+          ProductDetailScreen.routeName: (ctx) => ProductDetailScreen(),
+        });
   }
 }

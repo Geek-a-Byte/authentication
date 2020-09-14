@@ -24,6 +24,7 @@ dependencies:
   flutter:
     sdk: flutter
   http: ^0.12.0+4
+  custom_navigator: ^0.2.0
   flutter_awesome_alert_box: ^1.0.1
   shared_preferences: ^0.5.7+2
   google_fonts: ^0.6.2

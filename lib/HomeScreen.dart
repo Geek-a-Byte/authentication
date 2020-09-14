@@ -1,41 +1,21 @@
-import 'package:chatar_matha/product_details_screen.dart';
-import 'package:chatar_matha/products_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import './screens/overview_screen.dart';
+import './screens/product_details_screen.dart';
+import 'package:chatar_matha/providers/products_provider.dart';
 
-import 'overview_screen.dart';
+void main() => runApp(HomeScreen());
 
 class HomeScreen extends StatelessWidget {
+  //This is where username goes in
   final FirebaseUser user;
   String name;
   HomeScreen({this.user, this.name});
+
   @override
+  //HomeScreen(userName);
   Widget build(BuildContext context) {
-    // return Scaffold(
-    //   body: Container(
-    //     padding: EdgeInsets.all(32),
-    //     child: Column(
-    //       mainAxisAlignment: MainAxisAlignment.center,
-    //       crossAxisAlignment: CrossAxisAlignment.start,
-    //       children: <Widget>[
-    //         Text(
-    //           "You are Logged in succesfully",
-    //           style: TextStyle(color: Colors.lightBlue, fontSize: 32),
-    //         ),
-    //         SizedBox(
-    //           height: 16,
-    //         ),
-    //         Text(
-    //           "${user.phoneNumber}",
-    //           style: TextStyle(
-    //             color: Colors.grey,
-    //           ),
-    //         ),
-    //       ],
-    //     ),
-    //   ),
-    // );
     return ChangeNotifierProvider(
       create: (ctx) => Products(),
       child: MaterialApp(
