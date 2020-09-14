@@ -3,7 +3,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_awesome_alert_box/flutter_awesome_alert_box.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:chatar_matha/settings.dart';
 
 class SignUp extends StatefulWidget {

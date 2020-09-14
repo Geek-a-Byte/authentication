@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:chatar_matha/settings.dart';
-
 import 'SignUp.dart';
 
 class SplashScreen extends StatefulWidget {

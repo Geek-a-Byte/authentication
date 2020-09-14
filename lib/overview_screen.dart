@@ -1,8 +1,7 @@
-import 'package:Foodonation/homescreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import '../widgets/products_grid.dart';
+import './widgets/products_grid.dart';
 
 class OverviewScreen extends StatelessWidget {
   // var user1;

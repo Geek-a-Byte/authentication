@@ -6,8 +6,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_awesome_alert_box/flutter_awesome_alert_box.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:chatar_matha/settings.dart';
 
 class SignIn extends StatefulWidget {
   SignIn({Key key}) : super(key: key);
@@ -21,18 +19,14 @@ class _SignInState extends State<SignIn> {
   //TextEditingController nameController = TextEditingController();
   //TextEditingController phonecontroller = TextEditingController();
   //TextEditingController codecontroller = TextEditingController();
-  bool _showPass = false;
 
   final _nameController = TextEditingController();
   final _phoneController = TextEditingController();
   final _codeController = TextEditingController();
 
-  void _toggle() {
-    setState(() {
-      _showPass = !_showPass;
-    });
-  }
+  bool _showPass = false;
 
+  @override
   Future<void> loginUser(
       String phone, BuildContext context, String userName) async {
     FirebaseAuth _auth = FirebaseAuth.instance;
@@ -69,6 +63,7 @@ class _SignInState extends State<SignIn> {
       codeSent: (String verificationId, [int forceResendingToken]) {
         print('Verification id is:');
         print(verificationId);
+
         showDialog(
             context: context,
             barrierDismissible: false,
@@ -78,12 +73,16 @@ class _SignInState extends State<SignIn> {
                   content: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
-                      TextField(
+                      TextFormField(
                         controller: _codeController,
                         obscureText: (_showPass == true) ? false : true,
                         decoration: InputDecoration(
                           suffixIcon: IconButton(
-                            onPressed: _toggle,
+                            onPressed: () {
+                              setState(() {
+                                _showPass = !_showPass;
+                              });
+                            },
                             icon: !_showPass
                                 ? Icon(Icons.visibility_off)
                                 : Icon(Icons.visibility),
@@ -102,7 +101,11 @@ class _SignInState extends State<SignIn> {
                         AuthCredential credential =
                             PhoneAuthProvider.getCredential(
                           verificationId: verificationId,
+                          //verificationId: "8801928943835",
+                          //verificationId: "8801840054144",
+                          //smsCode: "12345"
                           smsCode: code,
+                          //name:_nameController;
                         );
                         try {
                           AuthResult result =
@@ -127,7 +130,7 @@ class _SignInState extends State<SignIn> {
                         } catch (e) {
                           WarningAlertBox(
                               context: context,
-                              title: "Sorry!",
+                              title: "Sorry!Try Again.",
                               messageText: "Invalid NID or contact no or OTP");
                         }
                       },
@@ -151,7 +154,6 @@ class _SignInState extends State<SignIn> {
     );
   }
 
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
