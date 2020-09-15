@@ -21,9 +21,7 @@ class _SignInState extends State<SignIn> {
   final _codeController = TextEditingController();
   String verificationId;
 
-  @override
-  Future<void> loginUser(
-      String phone, BuildContext context, String userName) async {
+  Future<void> loginUser(String phone, BuildContext context) async {
     FirebaseAuth _auth = FirebaseAuth.instance;
     print(phone);
     _auth.verifyPhoneNumber(
@@ -43,7 +41,7 @@ class _SignInState extends State<SignIn> {
               //builder: (context) => OverviewScreen(user),
               builder: (context) => HomeScreen(
                 user: user,
-                name: userName,
+                //name: userName,
               ),
             ),
           );
@@ -61,9 +59,10 @@ class _SignInState extends State<SignIn> {
         print(verificationId);
 
         showDialog(
+
+            //barrierDismissible: false,
             context: context,
-            barrierDismissible: false,
-            builder: (context) {
+            builder: (dialogContex) {
               return AlertDialog(
                   title: Text("Give me code?"),
                   content: Column(
@@ -84,32 +83,30 @@ class _SignInState extends State<SignIn> {
                         AuthCredential credential =
                             PhoneAuthProvider.getCredential(
                           verificationId: verificationId,
-                          //verificationId: "8801928943835",
-                          //verificationId: "8801840054144",
-                          //smsCode: "12345"
                           smsCode: code,
-                          //name:_nameController;
                         );
                         try {
                           AuthResult result =
                               await _auth.signInWithCredential(credential);
 
                           FirebaseUser user = result.user;
+                          //the next line is for to close the give my code dialog box after signing in successfully
+                          Navigator.of(context, rootNavigator: true).pop();
+                          SuccessAlertBox(
+                              context: context,
+                              //icon: Icons.done,
+                              title: "Login Successful!",
+                              messageText: "The contact no was verified.");
                           Navigator.push(
                             context,
                             MaterialPageRoute(
                               //builder: (context) => OverviewScreen(user),
                               builder: (context) => HomeScreen(
                                 user: user,
-                                name: userName,
+                                //name: userName,
                               ),
                             ),
                           );
-                          SuccessAlertBox(
-                              context: context,
-                              //icon: Icons.done,
-                              title: "Login Successful!",
-                              messageText: "The contact no was verified.");
                         } catch (Exp) {
                           print(Exp);
                           WarningAlertBox(
@@ -329,8 +326,8 @@ class _SignInState extends State<SignIn> {
                                       onPressed: () {
                                         final phone =
                                             _phoneController.text.trim();
-                                        loginUser(phone, context,
-                                            _nameController.text.toString());
+
+                                        loginUser(phone, context);
                                       },
                                     ),
                                   ),
