@@ -19,6 +19,9 @@ class _SignInState extends State<SignIn> {
   final _nameController = TextEditingController();
   final _phoneController = TextEditingController();
   final _codeController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+
   String verificationId;
 
   Future<void> loginUser(String phone, BuildContext context) async {
@@ -255,6 +258,120 @@ class _SignInState extends State<SignIn> {
                                       labelText: "Phone No : ",
 
                                       hintText: "+880*********",
+
+                                      // contentPadding: EdgeInsets.only(
+                                      //   bottom:
+                                      //       MediaQuery.of(context).size.height *
+                                      //           .05,
+                                      // ),
+
+                                      // suffixIcon: IconButton(
+                                      //   onPressed: _toggle,
+                                      //   icon: !_showPass
+                                      //       ? Icon(Icons.visibility_off)
+                                      //       : Icon(Icons.visibility),
+                                      // ),
+
+                                      labelStyle: TextStyle(
+                                        fontSize: 16,
+                                        color: Colors.black54,
+                                        fontFamily: 'HelveticaNeue',
+                                        fontWeight: FontWeight.bold,
+                                      ),
+
+                                      border: new UnderlineInputBorder(
+                                        borderSide:
+                                            BorderSide(color: Colors.black38),
+                                      ),
+
+                                      // and:
+
+                                      focusedBorder: new UnderlineInputBorder(
+                                        borderSide:
+                                            BorderSide(color: Colors.black12),
+                                      ),
+                                    ),
+                                    cursorColor: Colors.black,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(
+                                top: MediaQuery.of(context).size.height * 0.01,
+                                bottom:
+                                    MediaQuery.of(context).size.height * 0.03,
+                                left: MediaQuery.of(context).size.height * 0.01,
+                                right:
+                                    MediaQuery.of(context).size.height * 0.01,
+                              ),
+                              child: Column(
+                                children: [
+                                  TextFormField(
+                                    controller: _emailController,
+                                    // obscureText:
+                                    //     (_showPass == true) ? false : true,
+                                    decoration: InputDecoration(
+                                      labelText: "Email : ",
+
+                                      hintText: "your email id:",
+
+                                      // contentPadding: EdgeInsets.only(
+                                      //   bottom:
+                                      //       MediaQuery.of(context).size.height *
+                                      //           .05,
+                                      // ),
+
+                                      // suffixIcon: IconButton(
+                                      //   onPressed: _toggle,
+                                      //   icon: !_showPass
+                                      //       ? Icon(Icons.visibility_off)
+                                      //       : Icon(Icons.visibility),
+                                      // ),
+
+                                      labelStyle: TextStyle(
+                                        fontSize: 16,
+                                        color: Colors.black54,
+                                        fontFamily: 'HelveticaNeue',
+                                        fontWeight: FontWeight.bold,
+                                      ),
+
+                                      border: new UnderlineInputBorder(
+                                        borderSide:
+                                            BorderSide(color: Colors.black38),
+                                      ),
+
+                                      // and:
+
+                                      focusedBorder: new UnderlineInputBorder(
+                                        borderSide:
+                                            BorderSide(color: Colors.black12),
+                                      ),
+                                    ),
+                                    cursorColor: Colors.black,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(
+                                top: MediaQuery.of(context).size.height * 0.01,
+                                bottom:
+                                    MediaQuery.of(context).size.height * 0.03,
+                                left: MediaQuery.of(context).size.height * 0.01,
+                                right:
+                                    MediaQuery.of(context).size.height * 0.01,
+                              ),
+                              child: Column(
+                                children: [
+                                  TextFormField(
+                                    controller: _passwordController,
+                                    // obscureText:
+                                    //     (_showPass == true) ? false : true,
+                                    decoration: InputDecoration(
+                                      labelText: "Password : ",
+
+                                      hintText: "*********",
 
                                       // contentPadding: EdgeInsets.only(
                                       //   bottom:

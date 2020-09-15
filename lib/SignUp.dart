@@ -1,9 +1,12 @@
 import 'dart:convert';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_awesome_alert_box/flutter_awesome_alert_box.dart';
 import 'package:chatar_matha/settings.dart';
+
+import 'HomeScreen.dart';
 
 class SignUp extends StatefulWidget {
   SignUp({Key key}) : super(key: key);
@@ -20,7 +23,7 @@ class _SignUpState extends State<SignUp> {
   String title = "Sign in";
   TextEditingController nidController = TextEditingController();
   TextEditingController nameController = TextEditingController();
-  TextEditingController AddController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
   TextEditingController contactController = TextEditingController();
   TextEditingController passwordcontroller = TextEditingController();
   TextEditingController confirmpasswordcontroller = TextEditingController();
@@ -177,9 +180,9 @@ class _SignUpState extends State<SignUp> {
                                 style: TextStyle(
                                   color: Colors.black87,
                                 ),
-                                controller: AddController,
+                                controller: emailController,
                                 decoration: InputDecoration(
-                                  labelText: "Address:",
+                                  labelText: "Email:",
 
                                   labelStyle: TextStyle(
                                       fontSize: 15,
@@ -187,7 +190,7 @@ class _SignUpState extends State<SignUp> {
                                       fontWeight: FontWeight.w700,
                                       color: Colors.black54),
 
-                                  hintText: "Your Address",
+                                  hintText: "Your email id",
 
                                   hintStyle: TextStyle(
                                       fontFamily: 'HelveticaNeue',
@@ -402,7 +405,47 @@ class _SignUpState extends State<SignUp> {
                                         ],
                                       ),
                                       //color: Colors.black,    I CHANGED THIS//RAIYAN
-                                      onPressed: signup,
+                                      onPressed: () async {
+                                        try {
+                                          FirebaseUser user = (await FirebaseAuth
+                                                  .instance
+                                                  .createUserWithEmailAndPassword(
+                                                      email:
+                                                          emailController.text,
+                                                      password:
+                                                          passwordcontroller
+                                                              .text))
+                                              .user;
+                                          if (user != null) {
+                                            UserUpdateInfo updateUser =
+                                                UserUpdateInfo();
+                                            //take input from the app
+                                            updateUser.displayName =
+                                                nameController.text;
+                                            //push the inputted name to database
+                                            user.updateProfile(updateUser);
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                //builder: (context) => OverviewScreen(user),
+                                                builder: (context) =>
+                                                    HomeScreen(
+                                                  user: user,
+                                                  //name: userName,
+                                                ),
+                                              ),
+                                            );
+                                          }
+                                        } catch (e) {
+                                          print(e);
+                                          nidController.text = "";
+                                          nameController.text = "";
+                                          emailController.text = "";
+                                          contactController.text = "";
+                                          passwordcontroller.text = "";
+                                          confirmpasswordcontroller.text = "";
+                                        }
+                                      },
                                     ),
                                   ),
                                 ), //raised button
